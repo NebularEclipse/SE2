@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Grades{% endblock %}</h1>
+{% if g.user %}
+<a class="action" href="{{ url_for('main.create_grade') }}">New</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for grade in grades %}
+<article class="post">
+  <header>
+    <div>
+      <h1>{{ grade['course_code'] }}</h1>
+      <div class="about">
+        {{ grade['course_name'] }} - Grade: {{
+        grade['grade'] }}
+      </div>
+    </div>
+    {% if g.user %}
+    <a class="action" href="{{ url_for('main.update_grade', id=grade['guid']) }}">Edit</a>
+    {% endif %}
+  </header>
+</article>
+{% if not loop.last %}
+<hr />
+{% endif %}
+{% endfor %}
+{% endblock %}
